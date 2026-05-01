@@ -6,6 +6,8 @@ namespace Data.Repositories
     public interface IUserRepository : IRepository<User>
     {
         IEnumerable<User> Get(UserTypes? userType = null, string name = null, string email = null);
+        IEnumerable<User> GetUsersByTag(string tag= null);
+        
         void DeleteAll();
     }
 }

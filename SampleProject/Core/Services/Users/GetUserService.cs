@@ -25,5 +25,15 @@ namespace Core.Services.Users
         {
             return _userRepository.Get(userType, name, email);
         }
+
+        public IEnumerable<User> GetUsersByTag(string tag)
+        {
+            if (string.IsNullOrWhiteSpace(tag))
+            {
+                throw new ArgumentException("Tag is required.", nameof(tag));
+            }
+
+            return _userRepository.GetUsersByTag(tag);
+        }
     }
 }

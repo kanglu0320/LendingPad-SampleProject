@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BusinessEntities;
+﻿using BusinessEntities;
 using Common;
 using Data.Indexes;
 using Raven.Client;
+using Raven.Client.Document;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Data.Repositories
 {
@@ -51,6 +52,19 @@ namespace Data.Repositories
             }
             return query.ToList();
         }
+
+        public IEnumerable<User> GetUsersByTag(string tag)
+        {
+            if (string.IsNullOrWhiteSpace(tag))
+            {
+                return Enumerable.Empty<User>();
+            }
+
+            return _documentSession.Query<User, UsersListIndex>()
+                   .Where(user => user.Tags.Contains(tag))
+                   .ToList();
+        }
+
 
         public void DeleteAll()
         {
