@@ -1,14 +1,15 @@
-﻿using System.Web.Http;
-using System.Web.Http.Filters;
-using Common;
+﻿using Common;
 using Core;
 using Data;
+using Data.Repositories;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
+using System.Web.Http;
+using System.Web.Http.Filters;
 using WebApi.App_Start;
 
 namespace WebApi
@@ -26,6 +27,10 @@ namespace WebApi
 
             DataConfiguration.Initialize(container, lifestyle);
             CoreConfiguration.Initialize(container, lifestyle);
+
+            container.Register<IProductRepository, InMemoryProductRepository>(lifestyle);
+            container.Register<IOrderRepository, InMemoryOrderRepository>(lifestyle);
+
 
             container.RegisterWebApiControllers(config);
 
